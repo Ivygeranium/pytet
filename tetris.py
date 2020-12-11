@@ -108,6 +108,7 @@ class Tetris():
             self.left += 1
         elif key == 'w':
             self.idxBlockDegree  = (self.idxBlockDegree + 1 ) % 4
+
         elif key == ' ':
             while not self.tempBlk.anyGreaterThan(1):
                 self.top += 1
@@ -126,8 +127,12 @@ class Tetris():
             elif key == 'd':
                 self.left -= 1  
             elif key == 'w':
-                self.idxBlockDegree  = (self.idxBlockDegree - 1 ) % 4                     
-    
+                if self.idxBlockDegree == 0:
+                    self.idxBlockDegree = 4
+                else:
+                    self.idxBlockDegree  -= 1                   
+                    
+        self.currBlk = Tetris.setOfBlockObjects[self.idxBlockType][self.idxBlockDegree]
         self.tempBlk = self.iScreen.clip(self.top, self.left, self.top+self.currBlk.get_dy(), self.left+self.currBlk.get_dx())
         self.tempBlk = self.tempBlk + self.currBlk
         self.oScreen = Matrix(self.iScreen)
